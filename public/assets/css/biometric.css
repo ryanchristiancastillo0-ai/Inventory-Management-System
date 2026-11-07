@@ -1,0 +1,734 @@
+/* =========================================================
+   PREMIUM BIOMETRIC VERIFICATION — shared design system
+   Used by: login face verification + settings face enrollment
+   Self-contained light palette (premium fintech look).
+   ========================================================= */
+
+:root {
+    --bio-bg: #ffffff;
+    --bio-bg-soft: #f7f7f5;
+    --bio-text: #171717;
+    --bio-muted: #777777;
+    --bio-border: #eaeae7;
+    --bio-border-strong: #e0e0db;
+    --bio-primary: #171717;
+    --bio-primary-hover: #2b2b2b;
+    --bio-success: #16865d;
+    --bio-success-soft: #e8f5ef;
+    --bio-error: #d84c4c;
+    --bio-error-soft: #fbecec;
+    --bio-warn: #b7791f;
+    --bio-radius-xl: 24px;
+    --bio-radius-lg: 20px;
+    --bio-radius-md: 14px;
+    --bio-radius-sm: 12px;
+    --bio-font: 'Inter', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+html.bio-lock,
+body.bio-lock {
+    overflow: hidden;
+}
+
+/* ---------- overlay + shell ---------- */
+
+.bio-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 17, 17, 0.45);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    font-family: var(--bio-font);
+}
+
+.bio-overlay.is-open {
+    display: flex;
+    animation: bio-fade 0.2s ease both;
+}
+
+.bio-shell {
+    width: min(100%, 480px);
+    max-height: min(92vh, 800px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--bio-bg);
+    color: var(--bio-text);
+    border: 1px solid var(--bio-border);
+    border-radius: var(--bio-radius-xl);
+    box-shadow: 0 32px 80px rgba(17, 17, 17, 0.22);
+    padding: 24px;
+    animation: bio-rise 0.26s cubic-bezier(0.22, 0.8, 0.28, 1) both;
+}
+
+.bio-shell::-webkit-scrollbar { width: 6px; }
+.bio-shell::-webkit-scrollbar-thumb { background: #dcdcd5; border-radius: 999px; }
+
+/* ---------- header ---------- */
+
+.bio-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.bio-head-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: var(--bio-radius-md);
+    background: var(--bio-bg-soft);
+    border: 1px solid var(--bio-border);
+    color: var(--bio-text);
+    font-size: 19px;
+}
+
+.bio-head-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.bio-title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--bio-text);
+}
+
+.bio-sub {
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--bio-muted);
+}
+
+.bio-close {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    border: 1px solid var(--bio-border);
+    background: var(--bio-bg);
+    color: var(--bio-muted);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+
+.bio-close:hover {
+    background: var(--bio-bg-soft);
+    color: var(--bio-text);
+    border-color: var(--bio-border-strong);
+}
+
+/* ---------- body ---------- */
+
+.bio-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.bio-state:empty {
+    display: none;
+}
+
+.bio-state {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---------- intro illustration ---------- */
+
+.bio-illustration {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 190px;
+    border-radius: var(--bio-radius-lg);
+    border: 1px solid #efefea;
+    background:
+        radial-gradient(120% 120% at 50% 18%, #ffffff 0%, #fafaf7 48%, #f2f2ed 100%);
+    overflow: hidden;
+}
+
+.bio-illustration svg {
+    width: min(62%, 190px);
+    height: auto;
+    display: block;
+}
+
+.bio-illustration::after {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border-radius: 16px;
+    pointer-events: none;
+    background:
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) top left / 18px 1.5px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) top left / 1.5px 18px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) top right / 18px 1.5px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) top right / 1.5px 18px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) bottom left / 18px 1.5px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) bottom left / 1.5px 18px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) bottom right / 18px 1.5px no-repeat,
+        linear-gradient(var(--bio-border-strong), var(--bio-border-strong)) bottom right / 1.5px 18px no-repeat;
+    opacity: 0.9;
+}
+
+.bio-guidance {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bio-guidance li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: #565656;
+}
+
+.bio-guidance li i {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--bio-bg-soft);
+    border: 1px solid var(--bio-border);
+    color: var(--bio-text);
+    font-size: 13px;
+}
+
+.bio-fineprint {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--bio-muted);
+    text-align: center;
+}
+
+.bio-permission-copy {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--bio-text);
+    text-align: center;
+}
+
+/* ---------- camera ---------- */
+
+.bio-camera {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 54vh;
+    margin-inline: auto;
+    border-radius: var(--bio-radius-lg);
+    overflow: hidden;
+    background: #0f1113;
+    border: 1px solid var(--bio-border);
+}
+
+/* shorter 4:3 preview for enrollment so every action stays visible */
+.bio-camera.is-compact {
+    aspect-ratio: 4 / 3;
+    max-height: 42vh;
+}
+
+.bio-camera.is-hidden {
+    display: none;
+}
+
+.bio-camera video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+.bio-camera.is-busy video {
+    opacity: 0.45;
+}
+
+/* oval face guide + soft darkening outside it */
+.bio-guide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+}
+
+.bio-guide-oval {
+    width: 64%;
+    height: 78%;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0 200vmax rgba(10, 12, 14, 0.38);
+}
+
+.bio-guide-ring {
+    position: absolute;
+    width: 72%;
+    height: 86%;
+    border-radius: 50%;
+    border: 1.5px dashed rgba(255, 255, 255, 0.35);
+    animation: bio-spin 14s linear infinite;
+}
+
+/* corner ticks */
+.bio-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 0 solid rgba(255, 255, 255, 0.55);
+    pointer-events: none;
+}
+
+.bio-corner.tl { top: 16px; left: 16px; border-top-width: 1.5px; border-left-width: 1.5px; border-top-left-radius: 6px; }
+.bio-corner.tr { top: 16px; right: 16px; border-top-width: 1.5px; border-right-width: 1.5px; border-top-right-radius: 6px; }
+.bio-corner.bl { bottom: 16px; left: 16px; border-bottom-width: 1.5px; border-left-width: 1.5px; border-bottom-left-radius: 6px; }
+.bio-corner.br { bottom: 16px; right: 16px; border-bottom-width: 1.5px; border-right-width: 1.5px; border-bottom-right-radius: 6px; }
+
+.bio-camera-note {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 9px 14px;
+    border-radius: 999px;
+    background: rgba(15, 17, 19, 0.72);
+    color: #fff;
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.bio-camera-note[hidden] {
+    display: none;
+}
+
+/* ---------- scan meta (status + progress) ---------- */
+
+.bio-scan-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bio-scan-meta.is-hidden {
+    display: none;
+}
+
+.bio-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-start;
+    max-width: 100%;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--bio-border);
+    background: var(--bio-bg-soft);
+    color: #565656;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+.bio-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bio-success);
+    flex: 0 0 auto;
+}
+
+.bio-status.is-warn .bio-status-dot { background: var(--bio-warn); }
+.bio-status.is-error .bio-status-dot { background: var(--bio-error); }
+
+.bio-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: #efefea;
+    overflow: hidden;
+}
+
+.bio-progress > span {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: 999px;
+    background: var(--bio-primary);
+    transition: width 0.15s linear, background 0.2s ease;
+}
+
+.bio-progress > span.is-success {
+    background: var(--bio-success);
+}
+
+/* ---------- enrollment slots ---------- */
+
+.bio-slots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 2px 0;
+}
+
+.bio-slot {
+    width: 42px;
+    height: 6px;
+    border-radius: 999px;
+    background: #efefea;
+    transition: background 0.2s ease;
+}
+
+.bio-slot.is-filled {
+    background: var(--bio-success);
+}
+
+.bio-slots-label {
+    font-size: 12.5px;
+    color: var(--bio-muted);
+    text-align: center;
+}
+
+/* ---------- buttons ---------- */
+
+.bio-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2px;
+}
+
+.bio-btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 48px;
+    padding: 0 18px;
+    border: 1px solid transparent;
+    border-radius: var(--bio-radius-md);
+    font-family: var(--bio-font);
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease, opacity 0.16s ease;
+}
+
+.bio-btn:active {
+    transform: translateY(1px);
+}
+
+.bio-btn[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.bio-btn-primary {
+    background: var(--bio-primary);
+    color: #ffffff;
+}
+
+.bio-btn-primary:hover:not([disabled]) {
+    background: var(--bio-primary-hover);
+}
+
+.bio-btn-secondary {
+    background: var(--bio-bg);
+    color: var(--bio-text);
+    border-color: var(--bio-border-strong);
+}
+
+.bio-btn-secondary:hover:not([disabled]) {
+    background: var(--bio-bg-soft);
+}
+
+.bio-btn-ghost {
+    height: 42px;
+    background: transparent;
+    color: var(--bio-muted);
+    border-color: transparent;
+    font-size: 13.5px;
+    font-weight: 500;
+}
+
+.bio-btn-ghost:hover:not([disabled]) {
+    color: var(--bio-text);
+    background: var(--bio-bg-soft);
+}
+
+.bio-btn i {
+    font-size: 15px;
+}
+
+/* ---------- processing ---------- */
+
+.bio-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 30px 8px 10px;
+    text-align: center;
+}
+
+.bio-loader {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2px solid var(--bio-border);
+    border-top-color: var(--bio-text);
+    animation: bio-spin 0.9s linear infinite;
+}
+
+.bio-processing-text {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--bio-muted);
+}
+
+/* ---------- success / error states ---------- */
+
+.bio-state {
+    text-align: center;
+    align-items: center;
+}
+
+.bio-state-icon {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 24px;
+    animation: bio-pop 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+
+.bio-state-icon.is-success {
+    background: var(--bio-success-soft);
+    color: var(--bio-success);
+}
+
+.bio-state-icon.is-error {
+    background: var(--bio-error-soft);
+    color: var(--bio-error);
+}
+
+.bio-state-icon.is-neutral {
+    background: var(--bio-bg-soft);
+    border: 1px solid var(--bio-border);
+    color: var(--bio-text);
+}
+
+.bio-state h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--bio-text);
+}
+
+.bio-state p {
+    margin: 0;
+    max-width: 38ch;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--bio-muted);
+}
+
+.bio-state .bio-fineprint {
+    max-width: 40ch;
+    font-size: 12.5px;
+}
+
+/* ---------- animations ---------- */
+
+@keyframes bio-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bio-rise {
+    from { opacity: 0; transform: translateY(10px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes bio-pop {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bio-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 520px) {
+    .bio-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .bio-shell {
+        width: 100%;
+        max-height: 94vh;
+        border-radius: 24px 24px 0 0;
+        border-bottom: 0;
+        padding: 20px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .bio-title {
+        font-size: 22px;
+    }
+
+    .bio-camera {
+        max-height: 48vh;
+    }
+
+    .bio-illustration {
+        min-height: 160px;
+    }
+}
+
+@media (max-height: 680px) {
+    .bio-camera {
+        max-height: 42vh;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bio-overlay,
+    .bio-overlay.is-open,
+    .bio-shell,
+    .bio-state-icon,
+    .bio-guide-ring,
+    .bio-loader {
+        animation: none !important;
+    }
+
+    .bio-btn,
+    .bio-progress > span,
+    .bio-slot {
+        transition: none !important;
+    }
+}
+
+/* ---------- multi-account chooser (login) ---------- */
+
+.bio-account-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bio-account-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    text-align: left;
+    border: 1px solid var(--bio-border);
+    border-radius: var(--bio-radius-md);
+    background: var(--bio-bg);
+    font-family: var(--bio-font);
+    cursor: pointer;
+    transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.bio-account-row:hover {
+    background: var(--bio-bg-soft);
+    border-color: var(--bio-border-strong);
+}
+
+.bio-account-row.is-busy {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.bio-account-avatar {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--bio-bg-soft);
+    border: 1px solid var(--bio-border);
+    color: var(--bio-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.bio-account-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.bio-account-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bio-text);
+}
+
+.bio-account-email {
+    font-size: 12.5px;
+    color: var(--bio-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bio-account-role {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--bio-border);
+    background: var(--bio-bg-soft);
+    color: var(--bio-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.bio-account-role.is-admin {
+    background: var(--bio-success-soft);
+    border-color: transparent;
+    color: var(--bio-success);
+}

@@ -1,0 +1,114 @@
+/* ================================================================
+   THEME CSS
+   Loaded after main.css. Implements the "theme" preference that the
+   backend renders on <html data-theme-preference="SYSTEM|LIGHT|DARK">.
+   Dark mode is token-based: override the :root variables defined in
+   main.css; all components pick them up automatically.
+   ================================================================ */
+
+/* ---------- 1. DARK ---------- */
+html[data-theme-preference="DARK"] {
+    --bg: #0B0B0C;
+    --surface: #141416;
+    --surface-hover: #1D1D20;
+    --surface-muted: #101012;
+
+    --border: #232326;
+    --border-strong: #2E2E33;
+
+    --text: #F4F4F5;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #71717A;
+
+    --accent: #FAFAF9;
+    --accent-hover: #E4E4E7;
+
+    --success: #4ADE80;
+    --success-bg: #052E16;
+    --warning: #FACC15;
+    --warning-bg: #422006;
+    --danger: #F87171;
+    --danger-bg: #450A0A;
+    --info: #60A5FA;
+    --info-bg: #172554;
+}
+
+/* ---------- 2. SYSTEM (follow the OS) ---------- */
+/* Handles preference="SYSTEM" as long as media queries are supported */
+@media (prefers-color-scheme: dark) {
+    html[data-theme-preference="SYSTEM"] {
+        --bg: #0B0B0C;
+        --surface: #141416;
+        --surface-hover: #1D1D20;
+        --surface-muted: #101012;
+
+        --border: #232326;
+        --border-strong: #2E2E33;
+
+        --text: #F4F4F5;
+        --text-secondary: #A1A1AA;
+        --text-tertiary: #71717A;
+
+        --accent: #FAFAF9;
+        --accent-hover: #E4E4E7;
+
+        --success: #4ADE80;
+        --success-bg: #052E16;
+        --warning: #FACC15;
+        --warning-bg: #422006;
+        --danger: #F87171;
+        --danger-bg: #450A0A;
+        --info: #60A5FA;
+        --info-bg: #172554;
+    }
+}
+
+/* LIGHT stays the default values from main.css :root — nothing to do */
+
+/* ---------- 3. DARK CHROME HELPERS ---------- */
+/* Fine-grained tweaks tokens alone can't express */
+html[data-theme-preference="DARK"] body {
+    color-scheme: dark;
+}
+
+html[data-theme-preference="DARK"] ::selection {
+    background: #2563EB;
+    color: #FFFFFF;
+}
+
+/* Scrollbars */
+html[data-theme-preference="DARK"] ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+html[data-theme-preference="DARK"] ::-webkit-scrollbar-thumb {
+    background: #2E2E33;
+    border-radius: 10px;
+    border: 2px solid #0B0B0C;
+}
+html[data-theme-preference="DARK"] ::-webkit-scrollbar-thumb:hover {
+    background: #3F3F46;
+}
+html[data-theme-preference="DARK"] ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Shadows need to be deeper + softer in dark mode */
+html[data-theme-preference="DARK"] .dropdown-menu-app,
+html[data-theme-preference="DARK"] .modal-app,
+html[data-theme-preference="DARK"] .modal-dialog {
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .55), 0 4px 14px rgba(0, 0, 0, .4);
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-theme-preference="SYSTEM"] body { color-scheme: dark; }
+    html[data-theme-preference="SYSTEM"] ::selection { background: #2563EB; color: #FFFFFF; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-theme-preference="DARK"] *,
+    html[data-theme-preference="SYSTEM"] * {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}

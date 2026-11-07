@@ -1,0 +1,19 @@
+{
+    "name": "app/inventory-management",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ryan",
+            "email": "ryanchristiancastillo0@gmail.com"
+        }
+    ],
+    "require": {
+        "lbuchs/webauthn": "*",
+        "getbrevo/brevo-php": "^6.0",
+        "guzzlehttp/guzzle": "^8.3"
+    }
+}
