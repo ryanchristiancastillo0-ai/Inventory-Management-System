@@ -33,7 +33,7 @@ class EmailService
     {
         $this->apiKey = Env::get("BREVO_API_KEY");
         $this->fromEmail = Env::get("MAIL_FROM_EMAIL", "no-reply@inventoryhub.com") ?? "";
-        $this->fromName = trim(Env::get("MAIL_FROM_NAME", "Inventory Hub") ?? "Inventory Hub");
+        $this->fromName = trim(Env::get("MAIL_FROM_NAME", "STOKLIVO") ?? "STOKLIVO");
         $this->timeout = (int) (Env::get("BREVO_TIMEOUT", "10") ?? 10);
     }
 
@@ -139,7 +139,7 @@ class EmailService
         }
 
         $lines[] = "";
-        $lines[] = "- Inventory Hub";
+        $lines[] = "-STOKLIVO";
 
         return implode("\n", $lines);
     }

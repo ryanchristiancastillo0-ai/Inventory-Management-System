@@ -23,8 +23,10 @@ class StockMovementController
 
     public function showStockMovements(): void
     {
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+
         $movements = $this->stockMovementService
-            ->getAllStockMovements();
+            ->getAllStockMovements($userId);
 
         View::render("user/stock-movement/index", [
             "title" => "Stock Movements",
@@ -38,8 +40,10 @@ class StockMovementController
 
     public function getAllStockMovements(): array
     {
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+
         return $this->stockMovementService
-            ->getAllStockMovements();
+            ->getAllStockMovements($userId);
     }
 
     // ==========================================
@@ -82,8 +86,11 @@ class StockMovementController
         int $quantity,
         string $remarks
     ): bool {
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+
         return $this->stockMovementService
             ->createStockMovement(
+                $userId,
                 $productId,
                 $movementType,
                 $quantity,

@@ -105,6 +105,36 @@ switch ($route) {
 
 
     // ======================================
+    // SUPPLIER MANAGEMENT
+    // (need at least one supplier before a
+    //  restock order can be created — fk_orders_supplier)
+    // ======================================
+
+    case "POST /suppliers/create":
+
+        $roleMiddleware->handle("USER");
+
+        $supplierController->store();
+        exit;
+
+
+    case "POST /suppliers/update":
+
+        $roleMiddleware->handle("USER");
+
+        $supplierController->update();
+        exit;
+
+
+    case "POST /suppliers/delete":
+
+        $roleMiddleware->handle("USER");
+
+        $supplierController->destroy();
+        exit;
+
+
+    // ======================================
     // ORDER HISTORY PAGE
     // ======================================
 

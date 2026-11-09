@@ -16,25 +16,41 @@ class StockMovementRepo
         $this->db = Database::connect();
     }
 
-    // GET ALL STOCK MOVEMENTS
-    public function getAllStockMovements(): array
+    // GET ALL STOCK MOVEMENTS (BY USER)
+    public function getAllStockMovements(?int $userId = null): array
     {
         // LEFT JOIN products so movement rows carry the display name
         // and image; movement rows for deleted products still appear.
         // Falls back to plain movement rows if the join is unavailable
         // (e.g. the product-photos migration has not been run yet).
         try {
-            $stmt = $this->db->prepare(
-                "SELECT sm.*, p.name AS product_name, p.sku AS sku,
-                        p.image_path AS product_image, c.name AS category_name,
-                        p.quantity AS product_quantity, p.low_stock_threshold AS product_threshold
-                 FROM stock_movements sm
-                 LEFT JOIN products p ON p.id = sm.product_id
-                 LEFT JOIN categories c ON c.id = p.category_id
-                 ORDER BY sm.created_at DESC, sm.id DESC"
-            );
+            if ($userId !== null && $userId > 0) {
+                $stmt = $this->db->prepare(
+                    "SELECT sm.*, p.name AS product_name, p.sku AS sku,
+                            p.image_path AS product_image, c.name AS category_name,
+                            p.quantity AS product_quantity, p.low_stock_threshold AS product_threshold
+                     FROM stock_movements sm
+                     LEFT JOIN products p ON p.id = sm.product_id
+                     LEFT JOIN categories c ON c.id = p.category_id
+                     WHERE sm.user_id = :user_id
+                     ORDER BY sm.created_at DESC, sm.id DESC"
+                );
+                $stmt->execute([
+                    ':user_id' => $userId
+                ]);
+            } else {
+                $stmt = $this->db->prepare(
+                    "SELECT sm.*, p.name AS product_name, p.sku AS sku,
+                            p.image_path AS product_image, c.name AS category_name,
+                            p.quantity AS product_quantity, p.low_stock_threshold AS product_threshold
+                     FROM stock_movements sm
+                     LEFT JOIN products p ON p.id = sm.product_id
+                     LEFT JOIN categories c ON c.id = p.category_id
+                     ORDER BY sm.created_at DESC, sm.id DESC"
+                );
 
-            $stmt->execute();
+                $stmt->execute();
+            }
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (\PDOException $error) {
@@ -103,6 +119,7 @@ class StockMovementRepo
 
     // CREATE STOCK MOVEMENT
     public function createStockMovement(
+        int $userId,
         int $productId,
         string $movementType,
         int $quantity,
@@ -110,12 +127,13 @@ class StockMovementRepo
     ): bool {
         $stmt = $this->db->prepare(
             "INSERT INTO stock_movements
-             (product_id, movement_type, quantity, remarks)
+             (user_id, product_id, movement_type, quantity, remarks)
              VALUES
-             (:product_id, :movement_type, :quantity, :remarks)"
+             (:user_id, :product_id, :movement_type, :quantity, :remarks)"
         );
 
         return $stmt->execute([
+            ':user_id' => $userId,
             ':product_id' => $productId,
             ':movement_type' => $movementType,
             ':quantity' => $quantity,
@@ -165,6 +183,7 @@ class StockMovementRepo
     
     // RECORD MOVEMENT AND UPDATE PRODUCT STOCK
     public function recordStockMovement(
+        int $userId,
         int $productId,
         string $movementType,
         int $quantity,
@@ -209,12 +228,13 @@ class StockMovementRepo
             // SAVE STOCK MOVEMENT HISTORY
             $stmt = $this->db->prepare(
                 "INSERT INTO stock_movements
-                 (product_id, movement_type, quantity, remarks)
+                 (user_id, product_id, movement_type, quantity, remarks)
                  VALUES
-                 (:product_id, :movement_type, :quantity, :remarks)"
+                 (:user_id, :product_id, :movement_type, :quantity, :remarks)"
             );
 
             $saved = $stmt->execute([
+                ':user_id' => $userId,
                 ':product_id' => $productId,
                 ':movement_type' => $movementType,
                 ':quantity' => $quantity,

@@ -29,11 +29,15 @@ class OrderService
     }
 
     // ==========================================
-    // GET ALL ORDERS
+    // GET ALL ORDERS (BY USER)
     // ==========================================
 
-    public function getAllOrders(): array
+    public function getAllOrders(?int $userId = null): array
     {
+        if ($userId !== null && $userId > 0) {
+            return $this->orderRepo->getOrdersByUserId($userId);
+        }
+
         return $this->orderRepo->getAllOrders();
     }
 

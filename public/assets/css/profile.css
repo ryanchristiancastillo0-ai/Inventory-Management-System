@@ -266,7 +266,7 @@
     cursor: pointer;
     transition: background-color 150ms ease, border-color 150ms ease, opacity 150ms ease;
 }
-.profile-page .phone-btn--primary { background: var(--accent); color: #fff; }
+.profile-page .phone-btn--primary { background: var(--accent); color: var(--accent-contrast); }
 html[data-theme="dark"] .profile-page .phone-btn--primary { color: #16181b; }
 .profile-page .phone-btn--primary:hover { background: var(--accent-hover); }
 .profile-page .phone-btn--ghost {

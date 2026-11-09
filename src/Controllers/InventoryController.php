@@ -389,8 +389,11 @@ class InventoryController
         }
 
         try {
+            $userId = (int) ($_SESSION['user_id'] ?? 0);
+
             $success = $this->stockMovementService
                 ->createStockMovement(
+                    $userId,
                     $productId,
                     $movementType,
                     $quantity,

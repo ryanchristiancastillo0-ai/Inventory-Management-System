@@ -124,6 +124,14 @@ class AuthService
             return false;
         }
 
+        // Deactivated accounts cannot log in, even with a
+        // correct password.
+        if (isset($user['is_active']) && (int) $user['is_active'] !== 1) {
+            throw new InvalidArgumentException(
+                "Your account has been deactivated. Contact an administrator."
+            );
+        }
+
         $this->createLoginSession($user);
 
         return true;
@@ -155,6 +163,33 @@ class AuthService
 
         return !empty($_SESSION['logged_in'])
             && !empty($_SESSION['user_id']);
+    }
+
+    // =============================
+    // ACCOUNT STILL ACTIVE?
+    //
+    // A deactivated account must lose its session at once,
+    // not only be blocked on the next login attempt.
+    // Callers that are not logged in are unaffected.
+    // =============================
+
+    public function isActiveSession(): bool
+    {
+        $this->startSession();
+
+        if (empty($_SESSION['user_id'])) {
+            return true; // nothing to lock out
+        }
+
+        $user = $this->authRepo->findUserById(
+            (int) $_SESSION['user_id']
+        );
+
+        if (!$user) {
+            return false;
+        }
+
+        return (int) ($user['is_active'] ?? 1) === 1;
     }
 
     // =============================

@@ -17,16 +17,24 @@ class ProductRepo
     }
 
     // ==========================================
-    // GET ALL PRODUCTS
+    // GET ALL PRODUCTS (BY USER)
     // ==========================================
 
-    public function getAllProducts(): array
+    public function getAllProducts(?int $userId = null): array
     {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM products ORDER BY id DESC"
-        );
-
-        $stmt->execute();
+        if ($userId !== null && $userId > 0) {
+            $stmt = $this->db->prepare(
+                "SELECT * FROM products WHERE user_id = :user_id ORDER BY id DESC"
+            );
+            $stmt->execute([
+                ":user_id" => $userId
+            ]);
+        } else {
+            $stmt = $this->db->prepare(
+                "SELECT * FROM products ORDER BY id DESC"
+            );
+            $stmt->execute();
+        }
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -70,6 +78,7 @@ class ProductRepo
     // ==========================================
 
     public function createProduct(
+        int $userId,
         int $categoryId,
         string $sku,
         string $name,
@@ -81,14 +90,15 @@ class ProductRepo
     ): bool {
         $stmt = $this->db->prepare(
             "INSERT INTO products
-             (category_id, sku, name, description, image_path, price,
+             (user_id, category_id, sku, name, description, image_path, price,
               quantity, low_stock_threshold)
              VALUES
-             (:category_id, :sku, :name, :description, :image_path, :price,
+             (:user_id, :category_id, :sku, :name, :description, :image_path, :price,
               :quantity, :low_stock_threshold)"
         );
 
         return $stmt->execute([
+            ":user_id" => $userId,
             ":category_id" => $categoryId,
             ":sku" => $sku,
             ":name" => $name,
@@ -178,15 +188,26 @@ class ProductRepo
     // GET LOW STOCK PRODUCTS
     // ==========================================
 
-    public function getLowStockProducts(): array
+    public function getLowStockProducts(?int $userId = null): array
     {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM products
-             WHERE quantity <= low_stock_threshold
-             ORDER BY quantity ASC"
-        );
-
-        $stmt->execute();
+        if ($userId !== null && $userId > 0) {
+            $stmt = $this->db->prepare(
+                "SELECT * FROM products
+                 WHERE quantity <= low_stock_threshold
+                 AND user_id = :user_id
+                 ORDER BY quantity ASC"
+            );
+            $stmt->execute([
+                ":user_id" => $userId
+            ]);
+        } else {
+            $stmt = $this->db->prepare(
+                "SELECT * FROM products
+                 WHERE quantity <= low_stock_threshold
+                 ORDER BY quantity ASC"
+            );
+            $stmt->execute();
+        }
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

@@ -21,10 +21,10 @@ class StockMovementService
         $this->notificationService = $notificationService;
     }
 
-    // GET ALL STOCK MOVEMENTS
-    public function getAllStockMovements(): array
+    // GET ALL STOCK MOVEMENTS (BY USER)
+    public function getAllStockMovements(?int $userId = null): array
     {
-        return $this->stockMovementRepo->getAllStockMovements();
+        return $this->stockMovementRepo->getAllStockMovements($userId);
     }
 
     // FIND MOVEMENT BY ID
@@ -64,8 +64,9 @@ class StockMovementService
             ->getMovementsByType($movementType);
     }
 
-    // CREATE STOCK MOVEMENT
+    // CREATE STOCK MOVEMENT (BY USER)
     public function createStockMovement(
+        int $userId,
         int $productId,
         string $movementType,
         int $quantity,
@@ -86,6 +87,7 @@ class StockMovementService
 
         // UPDATE STOCK AND SAVE HISTORY
         $result = $this->stockMovementRepo->recordStockMovement(
+            $userId,
             $productId,
             $movementType,
             $quantity,

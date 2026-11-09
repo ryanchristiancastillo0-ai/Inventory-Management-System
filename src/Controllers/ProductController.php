@@ -25,11 +25,14 @@ class ProductController
 
 public function index(): void
 {
-    // GET ALL PRODUCTS
-    $products = $this->productService->getAllProducts();
+    // GET CURRENT USER ID FROM SESSION
+    $userId = (int) ($_SESSION['user_id'] ?? 0);
 
-    // GET LOW STOCK PRODUCTS
-    $lowStockProducts = $this->productService->getLowStockProducts();
+    // GET ALL PRODUCTS (BY USER)
+    $products = $this->productService->getAllProducts($userId);
+
+    // GET LOW STOCK PRODUCTS (BY USER)
+    $lowStockProducts = $this->productService->getLowStockProducts($userId);
 
     // CALCULATE PRODUCT STATISTICS
     $totalProducts = count($products);
@@ -61,10 +64,11 @@ public function index(): void
     ]);
 }
 
-    // GET ALL PRODUCTS
+    // GET ALL PRODUCTS (BY USER)
     public function getAllProducts(): array
     {
-        return $this->productService->getAllProducts();
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+        return $this->productService->getAllProducts($userId);
     }
 
     public function mutate(string $action): void
@@ -144,8 +148,10 @@ public function index(): void
                 $newImagePath = $stored['path'];
             }
 
+            $userId = (int) ($_SESSION['user_id'] ?? 0);
+
             $createArgs = $action === 'create'
-                ? [$category, $sku, $name, $_POST['description'] ?? '', $price, $quantity, $threshold, $newImagePath]
+                ? [$userId, $category, $sku, $name, $_POST['description'] ?? '', $price, $quantity, $threshold, $newImagePath]
                 : [$category, $sku, $name, $_POST['description'] ?? '', $price, $quantity, $threshold];
 
             if ($action === 'update') {
@@ -196,8 +202,9 @@ public function index(): void
         return $this->productService->findProductBySku($sku);
     }
 
-    // CREATE PRODUCT
+    // CREATE PRODUCT (BY USER)
     public function createProduct(
+        int $userId,
         int $categoryId,
         string $sku,
         string $name,
@@ -208,6 +215,7 @@ public function index(): void
         ?string $imagePath = null
     ): bool {
         $saved = $this->productService->createProduct(
+            $userId,
             $categoryId,
             $sku,
             $name,

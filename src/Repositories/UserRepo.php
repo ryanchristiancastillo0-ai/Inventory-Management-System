@@ -74,6 +74,24 @@ class UserRepo
     }
 
     // ==========================================
+    // SET ACCOUNT ACTIVE FLAG
+    // ==========================================
+
+    public function setUserActive(int $id, bool $active): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE users SET
+                is_active = :is_active
+             WHERE id = :id"
+        );
+
+        return $stmt->execute([
+            ":id" => $id,
+            ":is_active" => $active ? 1 : 0
+        ]);
+    }
+
+    // ==========================================
     // DELETE USER BY ID
     // ==========================================
 
@@ -204,6 +222,7 @@ class UserRepo
                 username,
                 email,
                 role,
+                is_active,
                 created_at
              FROM users
              ORDER BY created_at DESC, id DESC
@@ -233,6 +252,7 @@ class UserRepo
                 username,
                 email,
                 role,
+                is_active,
                 created_at
              FROM users
              ORDER BY created_at DESC, id DESC"
@@ -252,6 +272,7 @@ class UserRepo
                     username,
                     email,
                     role,
+                    is_active,
                     created_at
                  FROM users";
 

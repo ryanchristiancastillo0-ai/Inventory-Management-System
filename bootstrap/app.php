@@ -21,6 +21,7 @@ use App\Repositories\StockMovementRepo;
 use App\Repositories\OrderRepo;
 use App\Repositories\OrderItemRepo;
 use App\Repositories\OrderHistoryRepo;
+use App\Repositories\SupplierRepo;
 use App\Repositories\ActivityLogRepo;
 use App\Repositories\ReportRepo;
 use App\Repositories\SettingsRepo;
@@ -41,6 +42,7 @@ use App\Services\StockMovementService;
 use App\Services\OrderService;
 use App\Services\OrderItemService;
 use App\Services\OrderHistoryService;
+use App\Services\SupplierService;
 use App\Services\AdminDashboardService;
 use App\Services\AdminUserService;
 use App\Services\ActivityLogService;
@@ -61,6 +63,7 @@ use App\Controllers\StockMovementController;
 use App\Controllers\DashboardController;
 use App\Controllers\InventoryController;
 use App\Controllers\OrderController;
+use App\Controllers\SupplierController;
 use App\Controllers\OrderHistoryController;
 use App\Controllers\AdminDashboardController;
 use App\Controllers\AdminUserController;
@@ -89,6 +92,7 @@ $stockMovementRepo = new StockMovementRepo();
 $orderRepo = new OrderRepo();
 $orderItemRepo = new OrderItemRepo();
 $orderHistoryRepo = new OrderHistoryRepo();
+$supplierRepo = new SupplierRepo();
 $activityLogRepo = new ActivityLogRepo();
 $reportRepo = new ReportRepo();
 $settingsRepo = new SettingsRepo();
@@ -143,6 +147,8 @@ $orderHistoryService = new OrderHistoryService(
     $orderHistoryRepo,
     $orderRepo
 );
+
+$supplierService = new SupplierService($supplierRepo);
 
 $adminDashboardService = new AdminDashboardService(
     $userRepo,
@@ -248,7 +254,13 @@ $orderController = new OrderController(
     $orderItemService,
     $productService,
     $authService,
-    $orderHistoryService
+    $orderHistoryService,
+    $supplierService
+);
+
+$supplierController = new SupplierController(
+    $supplierService,
+    $authService
 );
 
 

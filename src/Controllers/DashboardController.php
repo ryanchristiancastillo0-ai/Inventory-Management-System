@@ -35,11 +35,14 @@ class DashboardController
 
     public function index(): void
     {
+        // GET CURRENT USER ID FROM SESSION
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+
         // FETCH DATA FROM EXISTING SERVICES
-        $products = $this->productService->getAllProducts();
+        $products = $this->productService->getAllProducts($userId);
         $categories = $this->categoryService->getAllCategories();
-        $lowStockProducts = $this->productService->getLowStockProducts();
-        $stockMovements = $this->stockMovementService->getAllStockMovements();
+        $lowStockProducts = $this->productService->getLowStockProducts($userId);
+        $stockMovements = $this->stockMovementService->getAllStockMovements($userId);
 
         // SUMMARY COUNTERS
         $totalProducts = count($products);

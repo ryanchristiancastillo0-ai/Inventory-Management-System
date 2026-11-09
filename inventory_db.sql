@@ -91,6 +91,7 @@ CREATE TABLE `order_history` (
 
 CREATE TABLE `order_items` (
   `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED DEFAULT NULL,
   `order_id` int UNSIGNED NOT NULL,
   `product_id` int UNSIGNED NOT NULL,
   `quantity` int UNSIGNED NOT NULL,
@@ -106,6 +107,7 @@ CREATE TABLE `order_items` (
 
 CREATE TABLE `products` (
   `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED DEFAULT NULL,
   `category_id` int UNSIGNED DEFAULT NULL,
   `sku` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -143,6 +145,7 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `stock_movements` (
   `id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED DEFAULT NULL,
   `product_id` int UNSIGNED NOT NULL,
   `movement_type` enum('IN','OUT') COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` int UNSIGNED NOT NULL,
@@ -267,6 +270,7 @@ ALTER TABLE `order_history`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_order_items_user` (`user_id`),
   ADD KEY `fk_order_items_order` (`order_id`),
   ADD KEY `fk_order_items_product` (`product_id`);
 
@@ -276,6 +280,7 @@ ALTER TABLE `order_items`
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `sku` (`sku`),
+  ADD KEY `idx_products_user` (`user_id`),
   ADD KEY `fk_products_category` (`category_id`);
 
 --
@@ -291,6 +296,7 @@ ALTER TABLE `reports`
 --
 ALTER TABLE `stock_movements`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_stock_movements_user` (`user_id`),
   ADD KEY `fk_movement_product` (`product_id`);
 
 --
@@ -441,13 +447,15 @@ ALTER TABLE `order_history`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `fk_order_items_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_order_items_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_order_items_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT;
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_products_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `fk_products_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `reports`
@@ -459,7 +467,8 @@ ALTER TABLE `reports`
 -- Constraints for table `stock_movements`
 --
 ALTER TABLE `stock_movements`
-  ADD CONSTRAINT `fk_movement_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT;
+  ADD CONSTRAINT `fk_movement_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE RESTRICT,
+  ADD CONSTRAINT `fk_stock_movements_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_oauth_accounts`

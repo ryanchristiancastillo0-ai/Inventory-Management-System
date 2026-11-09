@@ -29,5 +29,21 @@ class AuthMiddleware
             header("Location: /auth?auth=login");
             exit;
         }
+
+        // A deactivated account loses its session immediately.
+        if (!$this->authService->isActiveSession()) {
+            $this->authService->logout();
+
+            if (str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json')) {
+                http_response_code(403);
+                header('Content-Type: application/json; charset=utf-8');
+                header('Cache-Control: no-store');
+                echo json_encode(['success' => false, 'message' => 'Your account has been deactivated.']);
+                exit;
+            }
+
+            header("Location: /auth?auth=login&status=deactivated");
+            exit;
+        }
     }
 }

@@ -55,6 +55,11 @@ class AuthController
 
         unset($_SESSION['error'], $_SESSION['success']);
 
+        // Arriving here from the deactivated-account lockout.
+        if ($error === null && ($_GET['status'] ?? '') === 'deactivated') {
+            $error = 'Your account has been deactivated. Contact an administrator.';
+        }
+
         // Previously submitted values (so the form can be re-filled)
         $old = $_SESSION['old'] ?? [];
         unset($_SESSION['old']);
@@ -198,10 +203,19 @@ class AuthController
         $email    = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
-        $success = $this->authService->login(
-            $email,
-            $password
-        );
+        try {
+            $success = $this->authService->login(
+                $email,
+                $password
+            );
+
+            $loginError = null;
+        } catch (InvalidArgumentException $error) {
+            // Login raises this only when the account exists but
+            // has been deactivated — surface that exact message.
+            $success    = false;
+            $loginError = $error->getMessage();
+        }
 
         if ($success) {
             unset($_SESSION['old']);
@@ -217,8 +231,7 @@ class AuthController
         // Keep the typed email, stay on the login panel
         $_SESSION['old'] = ['email' => $email];
 
-        $_SESSION['error'] =
-            "Invalid email or password.";
+        $_SESSION['error'] = $loginError ?? "Invalid email or password.";
 
         header("Location: /auth?auth=login");
         exit;

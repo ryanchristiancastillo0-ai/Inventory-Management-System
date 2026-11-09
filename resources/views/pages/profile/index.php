@@ -18,15 +18,12 @@ $securityItems = [
      'status' => $security === null ? 'Unavailable'
          : ((!empty($security['phone']) && !empty($security['phone_verified'])) ? 'Verified' : 'Not set up'),
      'href' => '/profile#phoneCard', 'action' => 'Manage phone number'],
-    ['icon' => 'bi-fingerprint', 'title' => 'Passkeys', 'description' => 'Sign in with your device’s fingerprint or Windows Hello.',
-     'status' => $security === null ? 'Unavailable' : ((int) $security['passkey_count'] > 0 ? (int) $security['passkey_count'] . ' registered' : 'Not set up'),
-     'href' => '/settings#biometricCard', 'action' => 'Manage passkeys'],
     ['icon' => 'bi-person-bounding-box', 'title' => 'Face recognition', 'description' => 'Manage your enrolled face scans for biometric sign-in.',
      'status' => $security === null ? 'Unavailable' : ((int) $security['face_count'] > 0 ? 'Enrolled' : 'Not enrolled'),
      'href' => '/settings#biometricCard', 'action' => 'Manage face login']
 ];
 ?>
-<link rel="stylesheet" href="<?= asset('/assets/css/profile.css?v=2026110707') ?>">
+<link rel="stylesheet" href="<?= asset('/assets/css/profile.css?v=2026110902') ?>">
 
 <main class="dashboard-content profile-page" data-editing="<?= $editing ? 'true' : 'false' ?>">
     <header class="profile-page-header">

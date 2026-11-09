@@ -129,7 +129,7 @@ class EmailTemplates
 
         $bodyHtml = <<<BODY
         <p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:{$text};">Hi {$safeUser},</p>
-        <p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:{$text};">Someone requested a password reset for your Inventory Hub account. Use the verification code below to continue.</p>
+        <p style="margin:0 0 18px;font-size:14px;line-height:1.6;color:{$text};">Someone requested a password reset for your STOKLIVO account. Use the verification code below to continue.</p>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fafaf8;border:1px solid {$line};border-radius:12px;margin:0 0 12px;">
             <tr>
                 <td style="padding:22px 20px;text-align:center;">
@@ -179,7 +179,7 @@ class EmailTemplates
 
         $bodyHtml = <<<BODY
         <p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:{$text};">Hi {$safeUser},</p>
-        <p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:{$text};">Your Inventory Hub account password was just changed.</p>
+        <p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:{$text};">Your STOKLIVO account password was just changed.</p>
         <p style="margin:0 0 10px;font-size:14px;line-height:1.6;color:{$text};">If this was you, no action is needed &mdash; you can log in with your new password.</p>
         <p style="margin:0 0 2px;font-size:14px;line-height:1.6;color:{$text};">If you did <strong>not</strong> change your password, contact an administrator immediately.</p>
         {$ctaHtml}
@@ -252,7 +252,7 @@ class EmailTemplates
                             </tr>
                             <tr>
                                 <td style="padding:0 32px 16px;text-align:center;">
-                                    <span style="font-family:{$font};font-size:12px;color:#c4c5c3;">&copy; {$year} Inventory Hub</span>
+                                    <span style="font-family:{$font};font-size:12px;color:#c4c5c3;">&copy; {$year} STOKLIVO</span>
                                 </td>
                             </tr>
                         </table>

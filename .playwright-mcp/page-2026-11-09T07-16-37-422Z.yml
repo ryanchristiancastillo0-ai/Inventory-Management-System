@@ -1,0 +1,70 @@
+- generic [ref=f86e2]:
+  - text:          
+  - generic [ref=f86e3]:
+    - banner [ref=f86e4]:
+      - generic [ref=f86e5]:
+        - button "Open navigation menu" [ref=f86e6] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f86e7]: 
+        - generic [ref=f86e8]:
+          - text: Workspace /
+          - strong [ref=f86e9]: Restock orders
+      - generic [ref=f86e10]:
+        - generic [ref=f86e11]:
+          - generic [aria-hidden]: 
+          - searchbox "Search orders" [ref=f86e12]
+          - generic: ⌘K
+        - button "Notifications" [ref=f86e14] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f86e15]: 
+        - button "Account menu" [ref=f86e18] [cursor=pointer]:
+          - img "Administrator" [ref=f86e19]: AD
+    - main [ref=f86e20]:
+      - region [ref=f86e21]:
+        - generic [ref=f86e22]:
+          - heading "Restock orders" [level=1] [ref=f86e23]
+          - paragraph [ref=f86e24]:
+            - text: Track restocking orders across suppliers
+            - generic [ref=f86e25]:
+              - generic [aria-hidden] [ref=f86e26]: 
+              - text: ₱0.00 received
+        - generic [ref=f86e27]:
+          - button "Suppliers" [ref=f86e28] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f86e29]: 
+            - text: Suppliers
+          - button "New order" [ref=f86e30] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f86e31]: 
+            - text: New order
+      - region "Order statistics" [ref=f86e32]:
+        - generic [ref=f86e33]:
+          - paragraph [ref=f86e36]: Total orders
+          - paragraph [ref=f86e37]: "0"
+        - generic [ref=f86e38]:
+          - paragraph [ref=f86e41]: Pending
+          - paragraph [ref=f86e42]: "0"
+        - generic [ref=f86e43]:
+          - paragraph [ref=f86e46]: Ordered
+          - paragraph [ref=f86e47]: "0"
+        - generic [ref=f86e48]:
+          - paragraph [ref=f86e51]: Received
+          - paragraph [ref=f86e52]: "0"
+        - generic [ref=f86e53]:
+          - paragraph [ref=f86e56]: Cancelled
+          - paragraph [ref=f86e57]: "0"
+      - region "Filter orders" [ref=f86e58]:
+        - generic [ref=f86e59]:
+          - generic [ref=f86e60]:
+            - generic [aria-hidden]: 
+            - searchbox "Filter orders" [ref=f86e61]
+          - button "All statuses" [ref=f86e63] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f86e64]: 
+            - generic [aria-hidden] [ref=f86e66]: 
+        - generic [ref=f86e67]:
+          - generic [ref=f86e68]: 0 orders
+          - text: 
+      - generic [ref=f86e71]:
+        - generic [aria-hidden] [ref=f86e73]: 
+        - heading "No restock orders yet" [level=3] [ref=f86e74]
+        - paragraph [ref=f86e75]: Create your first restock order to request products from a supplier.
+        - button "New order" [ref=f86e76] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f86e77]: 
+          - text: New order
+    - text:         

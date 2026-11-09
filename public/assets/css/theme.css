@@ -22,6 +22,7 @@ html[data-theme-preference="DARK"] {
 
     --accent: #FAFAF9;
     --accent-hover: #E4E4E7;
+    --accent-contrast: #0B0B0C;
 
     --success: #4ADE80;
     --success-bg: #052E16;
@@ -51,6 +52,7 @@ html[data-theme-preference="DARK"] {
 
         --accent: #FAFAF9;
         --accent-hover: #E4E4E7;
+        --accent-contrast: #0B0B0C;
 
         --success: #4ADE80;
         --success-bg: #052E16;

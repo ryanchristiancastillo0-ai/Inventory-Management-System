@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title ?? 'Inventory System') ?></title>
     <script src="<?= asset('/assets/js/theme.js?v=2026110707') ?>"></script>
-    <link rel="stylesheet" href="<?= asset('/assets/css/main.css?v=2026110707') ?>">
-    <link rel="stylesheet" href="<?= asset('/assets/css/theme.css?v=2026110707') ?>">
+    <link rel="stylesheet" href="<?= asset('/assets/css/main.css?v=2026110905') ?>">
+    <link rel="stylesheet" href="<?= asset('/assets/css/theme.css?v=2026110902') ?>">
    
     <!-- BOOTSTRAP JS (head so inline page scripts can use it) -->
     <script src="<?= asset('/assets/bootstrap/js/bootstrap.bundle.min.js?v=2026110707') ?>"></script>
-    <script src="<?= asset('/assets/js/ui-overlays.js?v=2026110707') ?>"></script>
+    <script src="<?= asset('/assets/js/ui-overlays.js?v=2026110904') ?>"></script>
     <script src="<?= asset('/assets/js/account-navigation.js?v=2026110707') ?>" defer></script>
     <link rel="stylesheet" href="<?= asset('/assets/css/account-navigation.css?v=2026110707') ?>">
    

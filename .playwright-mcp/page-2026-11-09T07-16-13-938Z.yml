@@ -1,0 +1,121 @@
+- generic [active] [ref=f85e1]:
+  - generic [ref=f85e2]:
+    - text:          
+    - main [ref=f85e4]:
+      - generic [ref=f85e5]:
+        - generic [ref=f85e6]:
+          - heading "Profile" [level=1] [ref=f85e7]
+          - paragraph [ref=f85e8]: View and manage your account information.
+        - generic [ref=f85e9]:
+          - generic [aria-hidden] [ref=f85e10]: 
+          - text: My account
+      - generic [ref=f85e11]:
+        - region [ref=f85e13]:
+          - heading "user2" [level=2] [ref=f85e14]
+          - generic [ref=f85e15]:
+            - generic [aria-hidden] [ref=f85e16]: 
+            - text: User
+          - img "Profile initials for user2" [ref=f85e18]: U
+          - paragraph [ref=f85e19]: user2@gmail.com
+          - paragraph [ref=f85e20]:
+            - generic [aria-hidden] [ref=f85e21]: 
+            - text: Member since November 9, 2026
+        - region [ref=f85e23]:
+          - generic [ref=f85e24]:
+            - generic [ref=f85e25]:
+              - heading "Personal information" [level=2] [ref=f85e26]
+              - paragraph [ref=f85e27]: Your personal and account details.
+            - link "Edit profile" [ref=f85e28] [cursor=pointer]:
+              - /url: /profile?edit=1#profile-details
+              - generic [aria-hidden] [ref=f85e29]: 
+              - text: Edit profile
+          - generic [ref=f85e30]:
+            - generic [ref=f85e31]:
+              - generic [ref=f85e32]:
+                - generic [ref=f85e33]: Username
+                - generic [ref=f85e34]: user2
+              - generic [ref=f85e35]:
+                - generic [ref=f85e36]: Email address
+                - generic [ref=f85e37]: user2@gmail.com
+              - generic [ref=f85e38]:
+                - generic [ref=f85e39]: Account role
+                - generic [ref=f85e40]: User
+              - generic [ref=f85e41]:
+                - generic [ref=f85e42]: Member since
+                - generic [ref=f85e43]: November 9, 2026
+              - generic [ref=f85e44]:
+                - generic [ref=f85e45]: Account ID
+                - generic [ref=f85e46]: "#44"
+            - paragraph [ref=f85e48]:
+              - generic [aria-hidden] [ref=f85e49]: 
+              - text: Your account details are visible only to you and authorized administrators.
+      - region [ref=f85e50]:
+        - generic [ref=f85e51]:
+          - generic [ref=f85e53]: 
+          - generic [ref=f85e54]:
+            - heading "Mobile number" [level=2] [ref=f85e55]
+            - paragraph [ref=f85e56]: Sign in with a 6-digit code sent by SMS.
+          - generic [ref=f85e57]: Not set up
+        - generic [ref=f85e60]:
+          - generic [ref=f85e61]: Mobile number
+          - generic [ref=f85e62]:
+            - generic [ref=f85e63]: "+63"
+            - textbox "Mobile number" [ref=f85e64]:
+              - /placeholder: 912 345 6789
+            - button "Send code" [ref=f85e65] [cursor=pointer]
+          - paragraph [ref=f85e67]:
+            - generic [aria-hidden] [ref=f85e68]: 
+            - text: We'll text a one-time code to confirm this number. It must be verified before SMS sign-in works.
+          - paragraph [ref=f85e69]:
+            - generic [aria-hidden] [ref=f85e70]: 
+            - generic [ref=f85e71]: SMS verification supports Globe, TM and DITO networks. Smart, TNT and Sun are not supported by our current SMS provider.
+        - text: 
+      - region [ref=f85e72]:
+        - generic [ref=f85e73]:
+          - generic [ref=f85e74]:
+            - heading "Account security" [level=2] [ref=f85e75]
+            - paragraph [ref=f85e76]: Manage how you sign in and protect your account.
+          - generic [ref=f85e78]: 
+        - generic [ref=f85e79]:
+          - generic [ref=f85e80]:
+            - generic [ref=f85e82]: 
+            - generic [ref=f85e83]:
+              - heading "Password" [level=3] [ref=f85e84]
+              - paragraph [ref=f85e85]: Manage the password you use to sign in.
+            - generic [ref=f85e86]: Configured
+            - link "Change password" [ref=f85e87] [cursor=pointer]:
+              - /url: /settings#pwd-form
+              - text: Change password
+              - generic [aria-hidden] [ref=f85e88]: 
+          - generic [ref=f85e89]:
+            - generic [ref=f85e91]: 
+            - generic [ref=f85e92]:
+              - heading "Mobile number" [level=3] [ref=f85e93]
+              - paragraph [ref=f85e94]: Sign in with a code sent to your phone via SMS.
+            - generic [ref=f85e95]: Not set up
+            - link "Manage phone number" [ref=f85e96] [cursor=pointer]:
+              - /url: /profile#phoneCard
+              - text: Manage phone number
+              - generic [aria-hidden] [ref=f85e97]: 
+          - generic [ref=f85e98]:
+            - generic [ref=f85e100]: 
+            - generic [ref=f85e101]:
+              - heading "Face recognition" [level=3] [ref=f85e102]
+              - paragraph [ref=f85e103]: Manage your enrolled face scans for biometric sign-in.
+            - generic [ref=f85e104]: Not enrolled
+            - link "Manage face login" [ref=f85e105] [cursor=pointer]:
+              - /url: /settings#biometricCard
+              - text: Manage face login
+              - generic [aria-hidden] [ref=f85e106]: 
+      - region [ref=f85e107]:
+        - generic [ref=f85e108]:
+          - generic [ref=f85e109]:
+            - heading "Recent account activity" [level=2] [ref=f85e110]
+            - paragraph [ref=f85e111]: Your latest recorded actions in this workspace.
+          - generic [ref=f85e113]: 
+        - generic [ref=f85e114]:
+          - generic [ref=f85e116]: 
+          - generic [ref=f85e117]:
+            - heading "No activity recorded yet" [level=3] [ref=f85e118]
+            - paragraph [ref=f85e119]: Recorded actions associated with your account will appear here.
+  - text:  

@@ -414,6 +414,7 @@ $flashMsg  = (string) ($flash['message'] ?? '');
         background: var(--accent);
     }
     .toggle-row input[type="checkbox"]:checked ~ .toggle-switch::after {
+        background: var(--accent-contrast);
         transform: translateX(18px);
     }
     .toggle-row input[type="checkbox"]:focus-visible ~ .toggle-switch {
@@ -589,7 +590,7 @@ $flashMsg  = (string) ($flash['message'] ?? '');
         gap: 10px;
         padding: 12px 16px;
         background: var(--accent);
-        color: #fff;
+        color: var(--accent-contrast);
         border-radius: var(--radius-sm);
         font-size: 13px;
         font-weight: 500;

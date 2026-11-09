@@ -23,6 +23,13 @@ class RoleMiddleware
             exit;
         }
 
+        // A deactivated account loses its session immediately.
+        if (!$this->authService->isActiveSession()) {
+            $this->authService->logout();
+            header("Location: /auth?auth=login&status=deactivated");
+            exit;
+        }
+
         if (!$this->authService->hasRole($role)) {
             http_response_code(403);
             exit("Access denied");

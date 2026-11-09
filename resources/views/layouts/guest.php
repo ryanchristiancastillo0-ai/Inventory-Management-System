@@ -16,7 +16,7 @@
     </title>
 
     <!-- MAIN CSS -->
-    <link rel="stylesheet" href="<?= asset('/assets/css/main.css?v=2026110707') ?>">
+    <link rel="stylesheet" href="<?= asset('/assets/css/main.css?v=2026110905') ?>">
 
     <!-- BOOTSTRAP JS (head so inline page scripts can use it) -->
     <script src="<?= asset('/assets/bootstrap/js/bootstrap.bundle.min.js?v=2026110707') ?>"></script>

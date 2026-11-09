@@ -19,6 +19,9 @@
 
             --accent: #0A0A0A;
             --accent-hover: #27272A;
+            /* Text/icon colour that sits on top of --accent.
+               Flips to dark in dark mode (where --accent is near-white). */
+            --accent-contrast: #FFFFFF;
 
             --success: #15803D;
             --success-bg: #F0FDF4;
@@ -90,7 +93,7 @@
             height: 22px;
             border-radius: 5px;
             background: var(--accent);
-            color: #fff;
+            color: var(--accent-contrast);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -362,7 +365,7 @@
             border: 0;
             border-radius: var(--radius-sm);
             background: var(--accent);
-            color: #fff;
+            color: var(--accent-contrast);
             font-size: 13px;
             font-weight: 500;
             white-space: nowrap;
@@ -371,7 +374,7 @@
         }
         .btn-primary-app:hover {
             background: var(--accent-hover);
-            color: #fff;
+            color: var(--accent-contrast);
         }
         .btn-primary-app i { font-size: 14px; }
         .btn-primary-app:focus-visible {
@@ -895,7 +898,7 @@
         .pagination button:hover:not(:disabled) { background: var(--surface-hover); }
         .pagination button.active {
             background: var(--accent);
-            color: #fff;
+            color: var(--accent-contrast);
         }
         .pagination button:disabled {
             color: var(--text-tertiary);
@@ -908,6 +911,10 @@
            ========================================================= */
         .offcanvas.mobile-sidebar {
             --bs-offcanvas-width: 260px;
+            /* Bootstrap 5.0.2 hard-codes a white offcanvas background, so the
+               dark-mode text tokens would sit white-on-white. Theme it. */
+            background: var(--surface);
+            color: var(--text);
             border-right: 1px solid var(--border);
         }
         .offcanvas.mobile-sidebar .offcanvas-header {
@@ -918,6 +925,15 @@
         .offcanvas.mobile-sidebar .sidebar-inner {
             padding-top: 16px;
         }
+
+        /* While the mobile drawer is open Bootstrap hides the page scrollbar
+           and adds a padding-right to <body> to compensate. If the browser
+           reserves a scrollbar gutter (scrollbar-gutter: stable) that padding
+           double-compensates and visibly squeezes the page. Reserving the
+           gutter ourselves and dropping the padding keeps content width fixed.
+           The class is only added when the page actually had a scrollbar. */
+        html.mobile-nav-open { scrollbar-gutter: stable; }
+        html.mobile-nav-open body { padding-right: 0 !important; }
 
         /* =========================================================
            13. COMPONENT: Dropdown menus
@@ -958,6 +974,8 @@
             position: fixed;
             right: auto;
             z-index: 1035;
+            max-height: calc(100vh - 16px);
+            overflow-y: auto;
         }
 
         /* On narrow screens the filter buttons sit at the left edge —
@@ -1103,6 +1121,21 @@
             flex: 0 0 auto;
         }
 
+        /* Bootstrap row menus get the same viewport-fixed treatment so they
+           escape the table's scroll clipping. ui-overlays.js supplies the
+           --row-menu-* coordinates. */
+        .dropdown-menu.is-row-floating {
+            position: fixed !important;
+            top: var(--row-menu-top, 0px) !important;
+            left: var(--row-menu-left, 0px) !important;
+            right: auto !important;
+            bottom: auto !important;
+            margin: 0 !important;
+            transform: none !important;
+            max-height: calc(100vh - 16px);
+            overflow-y: auto;
+        }
+
         .notif-menu {
             min-width: 320px;
             max-height: 420px;
@@ -1202,6 +1235,30 @@
             justify-content: flex-end;
             gap: 8px;
         }
+
+        /* Our modals use .modal-body-app / .modal-footer-app instead of
+           Bootstrap's .modal-body / .modal-footer, so .modal-dialog-scrollable
+           had nothing to scroll: on short screens the body overflowed and the
+           footer (Add supplier button) was clipped. Mirror Bootstrap's
+           scrollable behaviour. */
+        .modal-dialog-scrollable .modal-header-app,
+        .modal-dialog-scrollable .modal-footer-app {
+            flex-shrink: 0;
+        }
+        /* Some modals wrap header/body/footer in a <form>; make that wrapper
+           a flex column too, otherwise the body cannot size or scroll. */
+        .modal-dialog-scrollable .modal-content-app > form {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            max-height: 100%;
+        }
+        .modal-dialog-scrollable .modal-body-app {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
         .modal-backdrop.show {
             opacity: 0.45;
             background: #0F0F0F;
@@ -1268,7 +1325,7 @@
             gap: 10px;
             padding: 12px 16px;
             background: var(--accent);
-            color: #fff;
+            color: var(--accent-contrast);
             border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 500;

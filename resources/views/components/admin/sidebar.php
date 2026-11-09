@@ -113,7 +113,7 @@ $renderNav = static function (array $groups, callable $isActive, callable $e) {
     <div class="sidebar-inner">
         <a href="/admin/dashboard" class="brand">
             <span class="brand-mark"><i class="bi bi-box-seam-fill" aria-hidden="true"></i></span>
-            <span class="brand-text">Inventory.</span>
+            <span class="brand-text">STOKLIVO</span>
         </a>
 
         <nav aria-label="Main navigation">
@@ -178,6 +178,18 @@ $renderNav = static function (array $groups, callable $isActive, callable $e) {
     /* Auto-close mobile sidebar after a nav link or brand click */
     var oc = document.getElementById('mobileSidebar');
     if (oc) {
+        /* Keep the page width steady while the drawer is open. Bootstrap
+           hides the scrollbar and pads <body>; the mobile-nav-open class
+           reserves the gutter instead so content doesn't squeeze. */
+        oc.addEventListener('show.bs.offcanvas', function () {
+            if (window.innerWidth > document.documentElement.clientWidth) {
+                document.documentElement.classList.add('mobile-nav-open');
+            }
+        });
+        oc.addEventListener('hidden.bs.offcanvas', function () {
+            document.documentElement.classList.remove('mobile-nav-open');
+        });
+
         oc.addEventListener('click', function (e) {
             if (!e.target.closest('a.nav-link-item') && !e.target.closest('a.brand')) return;
             if (typeof bootstrap !== 'undefined' && bootstrap.Offcanvas) {

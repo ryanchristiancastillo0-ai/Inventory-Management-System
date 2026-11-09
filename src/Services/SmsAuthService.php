@@ -260,6 +260,18 @@ class SmsAuthService
             ];
         }
 
+        // Deactivated accounts cannot log in, even with a
+        // correct OTP code.
+        if ((int) ($user['is_active'] ?? 1) !== 1) {
+            $this->clearOtpSession();
+
+            return [
+                'success' => false,
+                'message' => 'Your account has been deactivated. Contact an administrator.',
+                'redirect' => null,
+            ];
+        }
+
         // Create login session (regenerate ID for security)
         session_regenerate_id(true);
 

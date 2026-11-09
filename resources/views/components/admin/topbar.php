@@ -92,7 +92,7 @@ $topbarNotifItems        = $topbarNotifItems        ?? [
         gap: 10px;
         padding: 12px 16px;
         background: var(--accent);
-        color: #fff;
+        color: var(--accent-contrast);
         border-radius: var(--radius-sm);
         font-size: 13px;
         font-weight: 500;

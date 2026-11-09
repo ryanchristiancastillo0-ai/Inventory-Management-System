@@ -152,12 +152,14 @@ class AdminUserService
 
     // ==========================================
     // UPDATE USER
+    //
+    // The username and email are identity fields: the admin
+    // views them but cannot change them, so they are always
+    // taken from the stored record, never from the request.
     // ==========================================
 
     public function updateUser(
         int $id,
-        string $username,
-        string $email,
         string $role,
         ?string $password = null,
         ?int $currentAdminId = null
@@ -168,12 +170,7 @@ class AdminUserService
             );
         }
 
-        $username = trim($username);
-        $email = strtolower(trim($email));
         $role = strtoupper(trim($role));
-
-        $this->validateUser($username, $email);
-        $this->validateRole($role);
 
         $existing = $this->userRepo->getUserById($id);
 
@@ -182,6 +179,11 @@ class AdminUserService
                 "User not found."
             );
         }
+
+        $this->validateRole($role);
+
+        $username = (string) $existing["username"];
+        $email    = (string) $existing["email"];
 
         // Prevent an administrator from removing
         // their own administrator role.
@@ -202,18 +204,6 @@ class AdminUserService
         ) {
             throw new InvalidArgumentException(
                 "You cannot demote the last administrator."
-            );
-        }
-
-        $emailOwner = $this->userRepo
-            ->findUserByEmail($email);
-
-        if (
-            $emailOwner &&
-            (int) $emailOwner["id"] !== $id
-        ) {
-            throw new InvalidArgumentException(
-                "Email is already registered."
             );
         }
 
@@ -242,22 +232,17 @@ class AdminUserService
     }
 
     // ==========================================
-    // DELETE USER
+    // ACTIVATE / DEACTIVATE USER
     // ==========================================
 
-    public function deleteUser(
+    public function setUserActive(
         int $id,
+        bool $active,
         int $currentAdminId
     ): bool {
         if ($id <= 0) {
             throw new InvalidArgumentException(
                 "Invalid user ID."
-            );
-        }
-
-        if ($id === $currentAdminId) {
-            throw new InvalidArgumentException(
-                "You cannot delete your own account."
             );
         }
 
@@ -269,21 +254,36 @@ class AdminUserService
             );
         }
 
-        if (
-            $user["role"] === "ADMIN" &&
-            $this->userRepo->countUsersByRole("ADMIN") <= 1
-        ) {
+        if ($id === $currentAdminId) {
             throw new InvalidArgumentException(
-                "You cannot delete the last administrator."
+                "You cannot deactivate your own account."
             );
         }
 
-        if (!$this->userRepo->deleteUserById($id)) {
-            throw new RuntimeException(
-                "Unable to delete this account."
+        // Deactivating an administrator would remove the only
+        // non-delete way back in, so admins stay active.
+        if ($user["role"] === "ADMIN") {
+            throw new InvalidArgumentException(
+                "Admin accounts cannot be deactivated."
             );
         }
 
-        return true;
+        return $this->userRepo->setUserActive($id, $active);
+    }
+
+    // ==========================================
+    // DELETE USER
+    // ==========================================
+
+    public function deleteUser(
+        int $id,
+        int $currentAdminId
+    ): never {
+        // Deletion is intentionally disabled: the admin can
+        // deactivate accounts instead. This is enforced here
+        // even though the route is blocked as well.
+        throw new RuntimeException(
+            "User deletion is disabled. Deactivate the account instead."
+        );
     }
 }

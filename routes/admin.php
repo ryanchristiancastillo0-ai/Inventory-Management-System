@@ -67,7 +67,21 @@ switch ($route) {
 
 
         // ======================================
-        // DELETE USER
+        // ======================================
+        // ACTIVATE / DEACTIVATE USER
+        // ======================================
+
+    case "POST /admin/users/status":
+
+        $authMiddleware->handle();
+        $roleMiddleware->handle("ADMIN");
+
+        $adminUserController->toggleStatus();
+        exit;
+
+
+
+        // DELETE USER (disabled: hard-blocked with 403 in the controller)
         // ======================================
 
     case "POST /admin/users/delete":

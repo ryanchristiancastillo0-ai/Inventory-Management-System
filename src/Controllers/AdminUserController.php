@@ -217,6 +217,12 @@ private function getCurrentAdminId(): int
 
     // ==========================================
     // UPDATE USER
+    //
+    // Identity fields (username, email) are view-only for
+    // the admin, so they are read from the stored record
+    // inside the service — never from this request.
+    // Only the role (and an optional password reset) can
+    // be changed.
     // ==========================================
 
     public function update(): void
@@ -227,8 +233,6 @@ private function getCurrentAdminId(): int
         try {
             $result = $this->adminUserService->updateUser(
                 (int) ($_POST["id"] ?? 0),
-                (string) ($_POST["username"] ?? ""),
-                (string) ($_POST["email"] ?? ""),
                 (string) ($_POST["role"] ?? ""),
                 (string) ($_POST["password"] ?? ""),
                 $adminId
@@ -248,28 +252,50 @@ private function getCurrentAdminId(): int
     }
 
     // ==========================================
-    // DELETE USER
+    // ACTIVATE / DEACTIVATE USER
     // ==========================================
 
-    public function destroy(): void
+    public function toggleStatus(): void
     {
         $adminId = $this->getCurrentAdminId();
         $this->validateCsrf();
 
+        $makeActive = (string) ($_POST["is_active"] ?? "") === "1";
+
         try {
-            $this->adminUserService->deleteUser(
+            $result = $this->adminUserService->setUserActive(
                 (int) ($_POST["id"] ?? 0),
+                $makeActive,
                 $adminId
             );
 
             $this->flash(
-                "success",
-                "User deleted successfully."
+                $result ? "success" : "danger",
+                $result
+                    ? ($makeActive
+                        ? "User activated. They can log in again."
+                        : "User deactivated. They can no longer log in.")
+                    : "Unable to update the account status."
             );
         } catch (\Throwable $error) {
             $this->handleError($error);
         }
 
         $this->redirect();
+    }
+
+    // ==========================================
+    // DELETE USER (DISABLED)
+    //
+    // Deliberately blocked: the admin manages accounts
+    // through activate / deactivate instead. Even a forged
+    // POST reaches a hard refusal here.
+    // ==========================================
+
+    public function destroy(): never
+    {
+        http_response_code(403);
+        header('Content-Type: text/plain; charset=utf-8');
+        exit("Forbidden: user deletion has been disabled. Use activate / deactivate instead.");
     }
 }

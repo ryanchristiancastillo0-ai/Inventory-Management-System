@@ -1,0 +1,75 @@
+- generic [ref=f83e2]:
+  - text:          
+  - generic [ref=f83e3]:
+    - banner [ref=f83e4]:
+      - generic [ref=f83e5]:
+        - button "Open navigation menu" [ref=f83e6] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f83e7]: 
+        - generic [ref=f83e8]:
+          - text: Workspace /
+          - strong [ref=f83e9]: Dashboard
+      - generic [ref=f83e10]:
+        - generic [ref=f83e11]:
+          - generic [aria-hidden]: 
+          - searchbox "Search inventory activity" [ref=f83e12]
+          - generic: ⌘K
+        - button "Notifications" [ref=f83e14] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f83e15]: 
+        - button "Account menu" [ref=f83e17] [cursor=pointer]:
+          - img "User" [ref=f83e18]: U
+    - main [ref=f83e19]:
+      - region [ref=f83e20]:
+        - generic [ref=f83e21]:
+          - heading "Dashboard" [level=1] [ref=f83e22]
+          - paragraph [ref=f83e23]: Monitor your inventory, stock levels, and recent movements.
+        - generic [ref=f83e24]:
+          - button "Export" [ref=f83e25] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f83e26]: 
+            - text: Export
+          - link "Add product" [ref=f83e27] [cursor=pointer]:
+            - /url: /products
+            - generic [aria-hidden] [ref=f83e28]: 
+            - text: Add product
+      - generic [ref=f83e30]:
+        - generic [ref=f83e31]:
+          - generic [ref=f83e32]: "0"
+          - generic [ref=f83e33]: Total Products
+        - generic [ref=f83e34]:
+          - generic [ref=f83e35]: "1"
+          - generic [ref=f83e36]: Categories
+        - generic [ref=f83e37]:
+          - generic [ref=f83e38]: "0"
+          - generic [ref=f83e39]: Low Stock Items
+        - generic [ref=f83e40]:
+          - generic [ref=f83e41]: "0"
+          - generic [ref=f83e42]: Total Stock
+      - generic [ref=f83e44]:
+        - generic [ref=f83e45]: "Total Value: 0.00"
+        - generic [ref=f83e46]: "In Stock: 0"
+        - generic [ref=f83e47]: "Out of Stock: 0"
+        - generic [ref=f83e48]: "Total Movements: 0"
+      - region [ref=f83e49]:
+        - generic [ref=f83e50]:
+          - generic [ref=f83e51]:
+            - heading "Recent activity" [level=2] [ref=f83e52]
+            - paragraph [ref=f83e53]: Latest stock movements on your inventory
+          - tablist "Filter movements" [ref=f83e54]:
+            - tab "All" [selected] [ref=f83e55] [cursor=pointer]
+            - tab "Stock In" [ref=f83e56] [cursor=pointer]
+            - tab "Stock Out" [ref=f83e57] [cursor=pointer]
+            - tab "Alerts" [ref=f83e58] [cursor=pointer]
+        - generic [ref=f83e59]:
+          - table [ref=f83e60]:
+            - caption [ref=f83e61]: "Recent inventory activity: product, SKU, category, activity, quantity, date and status."
+            - rowgroup [ref=f83e62]:
+              - row [ref=f83e63]:
+                - columnheader "Product" [ref=f83e64]
+                - columnheader "SKU" [ref=f83e65]
+                - columnheader "Category" [ref=f83e66]
+                - columnheader "Activity" [ref=f83e67]
+                - columnheader "Quantity" [ref=f83e68]
+                - columnheader "Date" [ref=f83e69]
+                - columnheader "Status" [ref=f83e70]
+            - rowgroup
+          - generic [ref=f83e71]: No movements match your filter.
+        - paragraph [ref=f83e73]: Showing 0 of 0 movements

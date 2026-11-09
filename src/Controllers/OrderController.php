@@ -10,6 +10,7 @@ use App\Services\OrderHistoryService;
 use App\Services\OrderItemService;
 use App\Services\OrderService;
 use App\Services\ProductService;
+use App\Services\SupplierService;
 use RuntimeException;
 use Throwable;
 
@@ -20,14 +21,18 @@ class OrderController
         private OrderItemService $orderItemService,
         private ProductService $productService,
         private AuthService $authService,
-        private OrderHistoryService $orderHistoryService
+        private OrderHistoryService $orderHistoryService,
+        private SupplierService $supplierService
     ) {}
 
     // GET /orders — Restocking orders page
     public function index(): void
     {
-        $orders = $this->orderService->getAllOrders();
-        $products = $this->productService->getAllProducts();
+        $userId = (int) ($_SESSION['user_id'] ?? 0);
+
+        $orders = $this->orderService->getAllOrders($userId);
+        $products = $this->productService->getAllProducts($userId);
+        $suppliers = $this->supplierService->getAllSuppliers();
 
         $pendingOrders = 0;
         $orderedOrders = 0;
@@ -68,6 +73,7 @@ class OrderController
             'title' => 'Restock Orders',
             'orders' => $orders,
             'products' => $products,
+            'suppliers' => $suppliers,
             'totalOrders' => count($orders),
             'pendingOrders' => $pendingOrders,
             'orderedOrders' => $orderedOrders,

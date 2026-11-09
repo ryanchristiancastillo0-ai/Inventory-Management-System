@@ -15,10 +15,10 @@ class ProductService
         $this->productRepo = $productRepo;
     }
 
-    // GET ALL PRODUCTS
-    public function getAllProducts(): array
+    // GET ALL PRODUCTS (BY USER)
+    public function getAllProducts(?int $userId = null): array
     {
-        return $this->productRepo->getAllProducts();
+        return $this->productRepo->getAllProducts($userId);
     }
 
     // FIND PRODUCT BY ID
@@ -47,8 +47,9 @@ class ProductService
         return $product === false ? null : $product;
     }
 
-    // CREATE PRODUCT
+    // CREATE PRODUCT (BY USER)
     public function createProduct(
+        int $userId,
         int $categoryId,
         string $sku,
         string $name,
@@ -82,6 +83,7 @@ class ProductService
 
         // SAVE PRODUCT
         return $this->productRepo->createProduct(
+            $userId,
             $categoryId,
             trim($sku),
             trim($name),
@@ -178,8 +180,8 @@ class ProductService
     }
 
     // GET LOW STOCK PRODUCTS
-    public function getLowStockProducts(): array
+    public function getLowStockProducts(?int $userId = null): array
     {
-        return $this->productRepo->getLowStockProducts();
+        return $this->productRepo->getLowStockProducts($userId);
     }
 }
