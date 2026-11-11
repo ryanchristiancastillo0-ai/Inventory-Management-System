@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="<?= asset('/assets/css/biometric.css?v=2026110707') ?>">
     <script src="<?= asset('/assets/js/biometric-modal.js?v=2026110707') ?>"></script>
 
+    <?php require __DIR__ . '/../components/pwa.php' ?>
+
 </head>
 <body>
 

@@ -36,5 +36,6 @@ require __DIR__ . '/../products/components/catalog-setup.php';
      ========================================================== -->
 <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
+<script src="/assets/js/export.js?v=2026111101"></script>
 <script src="/assets/js/user/products/products-ui.js?v=2026110801"></script>
 <script src="/assets/js/user/products/products-catalog.js?v=2026110801"></script>

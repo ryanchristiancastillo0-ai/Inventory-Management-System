@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme-preference="SYSTEM">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export module test</title>
+    <link rel="stylesheet" href="/assets/css/main.css?v=2026110905">
+    <link rel="stylesheet" href="/assets/css/theme.css?v=2026110902">
+    <link rel="stylesheet" href="/assets/bootstrap-icons/bootstrap-icons.min.css?v=2026110707">
+</head>
+<body>
+    <main class="dashboard-content" style="padding:40px;max-width:720px">
+        <section class="page-header">
+            <div class="min-w-0">
+                <h1 class="page-title">Export module test</h1>
+                <p class="page-subtitle">Temporary harness for the shared CSV / Excel exporter.</p>
+            </div>
+            <div class="page-actions">
+                <button type="button" class="btn-secondary" id="exportBtn">
+                    <i class="bi bi-download" aria-hidden="true"></i>Export
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="/assets/js/export.js?v=2026111101"></script>
+    <script>
+        window.showToast = function (message) {
+            var stack = document.getElementById('toastStack');
+            var toast = document.createElement('div');
+            toast.textContent = message;
+            toast.style.cssText = 'padding:10px 14px;background:#111;color:#fff;border-radius:8px';
+            stack.appendChild(toast);
+        };
+
+        window.AppExport.bind(document.getElementById('exportBtn'), {
+            filename: 'products',
+            columns: [
+                'Name',
+                { label: 'Price', type: 'number' },
+                { label: 'Quantity', type: 'number' },
+                'SKU'
+            ],
+            getRows: function () {
+                return [
+                    ['Widget & <Co> "pro"', '12.50', '3', '00123'],
+                    ['Bolt', '0.99', '120', '00456']
+                ];
+            }
+        });
+    </script>
+</body>
+</html>

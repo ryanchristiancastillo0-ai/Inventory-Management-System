@@ -395,46 +395,53 @@
         }
     });
 
-    /* ---- Export (visible rows) ----
-       Export-injection guard: leading =,+,-,@ or tab/cr are neutralized,
-       same as CSV cell values. */
-    function exportRows(rows) {
-        if (!rows.length) { window.showToast('Nothing to export', 'bi-exclamation-circle'); return; }
+    /* ---- Export (visible rows / selected rows) ----
+       CSV + Excel logic lives in the shared /assets/js/export.js module. */
+    var exportColumns = [
+        'Name',
+        'SKU',
+        'Category',
+        { label: 'Price', type: 'number' },
+        { label: 'Quantity', type: 'number' },
+        { label: 'Threshold', type: 'number' },
+        'Status'
+    ];
 
-        var csv = 'Name,SKU,Category,Price,Quantity,Threshold,Status\n';
-        rows.forEach(function (r) {
-            var vals = [
-                r.dataset.name,
-                r.dataset.sku,
-                r.dataset.categoryName,
-                r.dataset.price,
-                r.dataset.quantity,
-                r.dataset.threshold,
-                r.dataset.status
-            ].map(function (v) {
-                v = String(v || '');
-                if (/^[=+@\-\t\r]/.test(v)) v = "'" + v;
-                return /[",\n]/.test(v) ? '"' + String(v).replace(/"/g, '""') + '"' : v;
-            });
-            csv += vals.join(',') + '\n';
-        });
-        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'products-' + new Date().toISOString().slice(0, 10) + '.csv';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        window.showToast('Exported ' + rows.length + ' products', 'bi-download');
+    function exportRowValues(row) {
+        return [
+            row.dataset.name,
+            row.dataset.sku,
+            row.dataset.categoryName,
+            row.dataset.price,
+            row.dataset.quantity,
+            row.dataset.threshold,
+            row.dataset.status
+        ];
     }
-    document.getElementById('exportBtn').addEventListener('click', function () {
-        exportRows(Array.from(body.querySelectorAll('tr')).filter(function (row) { return row.style.display !== 'none'; }));
-    });
+
+    if (window.AppExport) {
+        window.AppExport.bind(document.getElementById('exportBtn'), {
+            filename: 'products',
+            columns: exportColumns,
+            getRows: function () {
+                return Array.from(body.querySelectorAll('tr')).filter(function (row) {
+                    return row.style.display !== 'none';
+                }).map(exportRowValues);
+            }
+        });
+
+        window.AppExport.bind(document.getElementById('bulkExportBtn'), {
+            filename: 'products-selected',
+            columns: exportColumns,
+            getRows: function () {
+                return Array.from(body.querySelectorAll('.row-check:checked')).map(function (input) {
+                    return input.closest('tr');
+                }).filter(Boolean).map(exportRowValues);
+            }
+        });
+    }
 
     /* ---- Bulk actions ---- */
-    document.getElementById('bulkExportBtn').addEventListener('click', function () {
-        exportRows(Array.from(body.querySelectorAll('.row-check:checked')).map(function (input) { return input.closest('tr'); }));
-    });
     document.getElementById('bulkDeleteBtn').addEventListener('click', function () {
         var checked = body.querySelectorAll('.row-check:checked');
         if (!checked.length) return;

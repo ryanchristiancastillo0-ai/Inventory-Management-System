@@ -1,0 +1,25 @@
+- main [ref=e2]:
+  - region "We couldn't find that page" [ref=e3]:
+    - link "Inventory." [ref=e4] [cursor=pointer]:
+      - /url: /auth
+      - generic [aria-hidden] [ref=e5]: I
+    - paragraph [aria-hidden] [ref=e7]: "404"
+    - generic [ref=e8]:
+      - generic [aria-hidden] [ref=e9]: 
+      - text: Route not found
+    - heading "We couldn't find that page" [level=1] [ref=e10]
+    - paragraph [ref=e11]: The address you followed doesn't match anything here. It may have been moved, renamed, or typed incorrectly.
+    - paragraph [ref=e12]:
+      - generic [aria-hidden] [ref=e13]: 
+      - code [ref=e14]: /autkk
+    - generic [ref=e15]:
+      - link "Go to sign in" [ref=e16] [cursor=pointer]:
+        - /url: /auth
+        - generic [aria-hidden] [ref=e17]: 
+        - text: Go to sign in
+      - button "Go back" [ref=e18] [cursor=pointer]:
+        - generic [aria-hidden] [ref=e19]: 
+        - text: Go back
+  - paragraph [ref=e20]:
+    - generic [ref=e21]: Error 404
+    - generic [ref=e23]: Inventory Management System

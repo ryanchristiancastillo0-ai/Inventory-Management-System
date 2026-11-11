@@ -71,4 +71,5 @@ $e = static fn ($v): string => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8'
      ========================================================== -->
 <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
+<script src="/assets/js/export.js?v=2026111101"></script>
 <script src="/assets/js/user/dashboard.js"></script>

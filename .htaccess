@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Internally serve the application from public/
+RewriteRule ^public/ - [L]
+RewriteRule ^(.*)$ public/$1 [L]

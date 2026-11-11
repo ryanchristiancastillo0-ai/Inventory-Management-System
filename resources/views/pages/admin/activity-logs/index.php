@@ -37,4 +37,5 @@ require __DIR__ . '/components/activity-logs-setup.php';
 
 <script src="<?= asset('/assets/js/admin/activity-logs/activity-logs-ui.js?v=2026110902') ?>"></script>
 <script src="<?= asset('/assets/js/admin/activity-logs/activity-logs-modals.js?v=2026110902') ?>"></script>
-<script src="<?= asset('/assets/js/admin/activity-logs/activity-logs-table.js?v=2026110903') ?>"></script>
+<script src="<?= asset('/assets/js/export.js?v=2026111101') ?>"></script>
+<script src="<?= asset('/assets/js/admin/activity-logs/activity-logs-table.js?v=2026110904') ?>"></script>

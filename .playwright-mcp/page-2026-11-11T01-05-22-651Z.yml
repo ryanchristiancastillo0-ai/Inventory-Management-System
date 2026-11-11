@@ -1,0 +1,18 @@
+- main [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - heading "Export module test" [level=1] [ref=f3e5]
+      - paragraph [ref=f3e6]: Temporary harness for the shared CSV / Excel exporter.
+    - generic [ref=f3e8]:
+      - button "Export" [expanded] [active] [ref=f3e9] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f3e10]: 
+        - text: Export
+        - generic [aria-hidden] [ref=f3e11]: 
+      - menu [ref=f3e12]:
+        - generic [ref=f3e13]: Export as
+        - button "CSV (.csv)" [ref=f3e14] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f3e15]: 
+          - text: CSV (.csv)
+        - button "Excel (.xlsx)" [ref=f3e16] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f3e17]: 
+          - text: Excel (.xlsx)

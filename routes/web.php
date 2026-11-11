@@ -146,7 +146,39 @@ require __DIR__ . "/api.php";
 // ROUTE NOT FOUND
 // ==========================================
 
-jsonResponse([
-    "error" => "Route not found",
-    "path" => $path
-], 404);
+/*
+ * API/JSON callers and non-GET requests keep the machine-readable
+ * response. Browser page requests get the themed 404 screen.
+ */
+$wantsJson = str_starts_with($path, "/api/")
+    || str_contains($_SERVER["HTTP_ACCEPT"] ?? "", "application/json")
+    || (($_SERVER["HTTP_X_REQUESTED_WITH"] ?? "") === "XMLHttpRequest")
+    || $method !== "GET";
+
+if ($wantsJson) {
+    jsonResponse([
+        "error" => "Route not found",
+        "path" => $path
+    ], 404);
+}
+
+$isAuthenticated = isset($_SESSION["user_id"]);
+
+http_response_code(404);
+
+header("Content-Type: text/html; charset=utf-8");
+
+header("Cache-Control: no-store");
+
+header("X-Content-Type-Options: nosniff");
+
+\App\Core\View::render("errors/404", [
+    "title" => "Page not found · Inventory.",
+    "path" => rawurldecode($path),
+    "homeUrl" => $isAuthenticated
+        ? (($_SESSION["role"] ?? "") === "ADMIN" ? "/admin/dashboard" : "/dashboard")
+        : "/auth",
+    "homeLabel" => $isAuthenticated ? "Back to dashboard" : "Go to sign in",
+], "error");
+
+exit;

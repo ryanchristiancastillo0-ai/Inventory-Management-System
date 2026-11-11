@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're offline — Inventory System</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png">
+    <style>
+        :root { color-scheme: dark; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+            background: #0B0B0C;
+            color: #FAFAF9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .offline-card {
+            max-width: 420px;
+            text-align: center;
+        }
+        .offline-card .glyph {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            display: grid;
+            place-items: center;
+            background: #17171A;
+            border: 1px solid #2A2A2E;
+            border-radius: 18px;
+            font-size: 30px;
+        }
+        h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #A1A1AA;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 24px;
+        }
+        button {
+            font: inherit;
+            font-weight: 600;
+            background: #FAFAF9;
+            color: #0B0B0C;
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 28px;
+            cursor: pointer;
+        }
+        button:hover { background: #E4E4E7; }
+    </style>
+</head>
+<body>
+    <main class="offline-card">
+        <div class="glyph">&#128230;</div>
+        <h1>You're offline</h1>
+        <p>
+            This page needs a connection to the inventory server.
+            Check your network and try again &mdash; pages you visited
+            recently may still be available from the cache.
+        </p>
+        <button onclick="window.location.reload()">Retry</button>
+    </main>
+</body>
+</html>

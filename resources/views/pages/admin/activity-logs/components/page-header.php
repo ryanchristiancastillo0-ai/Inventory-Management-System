@@ -14,7 +14,7 @@
     </div>
     <div class="d-flex flex-wrap gap-2">
         <button type="button" class="btn-secondary" id="exportCsvBtn">
-            <i class="bi bi-download" aria-hidden="true"></i>Export CSV
+            <i class="bi bi-download" aria-hidden="true"></i>Export
         </button>
     </div>
 </section>

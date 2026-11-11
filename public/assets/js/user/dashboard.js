@@ -159,51 +159,35 @@
 })();
 
 /* =========================================================
-   COMPONENT: Export button
+   COMPONENT: Export button (shared CSV/Excel module)
    ========================================================= */
 (function () {
     var btn = document.getElementById('exportBtn');
-    if (!btn) return;
+    if (!btn || !window.AppExport) return;
 
-    btn.addEventListener('click', function () {
-        var rows = document.querySelectorAll('#activityBody tr');
-        var visibleRows = Array.prototype.filter.call(rows, function (r) {
-            return r.style.display !== 'none';
-        });
+    function cellText(cells, index) {
+        return cells[index] ? cells[index].textContent.trim() : '';
+    }
 
-        if (!visibleRows.length) {
-            window.showToast('Nothing to export', 'bi-exclamation-circle');
-            return;
-        }
-
-        var csv = 'Product,SKU,Category,Activity,Quantity,Date,Status\n';
-        visibleRows.forEach(function (row) {
-            var cells = row.querySelectorAll('td');
-            var values = [
-                (cells[0].querySelector('.product-name') || cells[0]).textContent.trim(),
-                cells[1].textContent.trim(),
-                cells[2].textContent.trim(),
-                cells[3].textContent.trim(),
-                cells[4].textContent.trim(),
-                cells[5].textContent.trim(),
-                cells[6].textContent.trim()
-            ].map(function (v) {
-                if (/[",\n]/.test(v)) return '"' + v.replace(/"/g, '""') + '"';
-                return v;
+    window.AppExport.bind(btn, {
+        filename: 'inventory-activity',
+        columns: ['Product', 'SKU', 'Category', 'Activity', 'Quantity', 'Date', 'Status'],
+        getRows: function () {
+            return Array.prototype.filter.call(
+                document.querySelectorAll('#activityBody tr'),
+                function (row) { return row.style.display !== 'none'; }
+            ).map(function (row) {
+                var cells = row.querySelectorAll('td');
+                return [
+                    (cells[0].querySelector('.product-name') || cells[0]).textContent.trim(),
+                    cellText(cells, 1),
+                    cellText(cells, 2),
+                    cellText(cells, 3),
+                    cellText(cells, 4),
+                    cellText(cells, 5),
+                    cellText(cells, 6)
+                ];
             });
-            csv += values.join(',') + '\n';
-        });
-
-        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'inventory-activity-' + new Date().toISOString().slice(0, 10) + '.csv';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-
-        window.showToast('Exported ' + visibleRows.length + ' row' + (visibleRows.length === 1 ? '' : 's') + ' to CSV', 'bi-download');
+        }
     });
 })();

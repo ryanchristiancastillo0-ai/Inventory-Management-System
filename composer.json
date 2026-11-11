@@ -15,5 +15,10 @@
         "lbuchs/webauthn": "*",
         "getbrevo/brevo-php": "^6.0",
         "guzzlehttp/guzzle": "^8.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

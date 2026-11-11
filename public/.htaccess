@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Keep existing CSS, JS and images accessible
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Send application URLs to your MVC entry point
+RewriteRule ^ index.php [L,QSA]

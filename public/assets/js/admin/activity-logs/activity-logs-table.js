@@ -188,47 +188,28 @@
         }
     });
 
-    /* Export CSV — current page (respects active filters) */
+    /* Export (current page, respects active filters) */
     var exportBtn = document.getElementById('exportCsvBtn');
-    if (exportBtn) {
-        exportBtn.addEventListener('click', function () {
-            var matched = filteredRows();
-            if (!matched.length) { window.showToast('Nothing to export', 'bi-download', true); return; }
-
-            var rows = [['Log ID', 'Action', 'Actor', 'Email', 'Target', 'IP', 'When', 'Details']];
-            matched.forEach(function (row) {
-                var trigger = row.querySelector('[data-action="view-detail"]');
-                if (!trigger) return;
-                rows.push([
-                    trigger.getAttribute('data-log-id') || '',
-                    trigger.getAttribute('data-log-action') || '',
-                    trigger.getAttribute('data-log-actor') || '',
-                    trigger.getAttribute('data-log-email') || '',
-                    trigger.getAttribute('data-log-target') || '',
-                    trigger.getAttribute('data-log-ip') || '',
-                    trigger.getAttribute('data-log-when') || '',
-                    trigger.getAttribute('data-log-details') || ''
-                ]);
-            });
-
-            var csv = rows.map(function (r) {
-                return r.map(function (v) {
-                    var s = String(v).replace(/"/g, '""');
-                    return /[",\n]/.test(s) ? '"' + s + '"' : s;
-                }).join(',');
-            }).join('\n');
-
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-            var url  = URL.createObjectURL(blob);
-            var a    = document.createElement('a');
-            a.href = url;
-            a.download = 'activity-logs-page-' + (window.__LOGS_PAGE || 1) + '-' + Date.now() + '.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            window.showToast('Exported ' + matched.length + ' row' + (matched.length === 1 ? '' : 's'), 'bi-download');
+    if (exportBtn && window.AppExport) {
+        window.AppExport.bind(exportBtn, {
+            filename: 'activity-logs-page-' + (window.__LOGS_PAGE || 1),
+            columns: ['Log ID', 'Action', 'Actor', 'Email', 'Target', 'IP', 'When', 'Details'],
+            getRows: function () {
+                return filteredRows().map(function (row) {
+                    var trigger = row.querySelector('[data-action="view-detail"]');
+                    if (!trigger) return null;
+                    return [
+                        trigger.getAttribute('data-log-id') || '',
+                        trigger.getAttribute('data-log-action') || '',
+                        trigger.getAttribute('data-log-actor') || '',
+                        trigger.getAttribute('data-log-email') || '',
+                        trigger.getAttribute('data-log-target') || '',
+                        trigger.getAttribute('data-log-ip') || '',
+                        trigger.getAttribute('data-log-when') || '',
+                        trigger.getAttribute('data-log-details') || ''
+                    ];
+                }).filter(Boolean);
+            }
         });
     }
 

@@ -47,6 +47,8 @@ declare(strict_types=1);
         rel="stylesheet"
     >
 
+    <?php require __DIR__ . '/../components/pwa.php' ?>
+
 </head>
 <body>
     <div class="app-shell">
